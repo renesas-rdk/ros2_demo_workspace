@@ -148,6 +148,16 @@ parse_args "$@"
 require_cmd docker
 require_cmd realpath
 
+missing_pkgs=""
+
+for pkg in qemu-user-static binfmt-support ca-certificates; do
+    dpkg -s "$pkg" >/dev/null 2>&1 || missing_pkgs="$missing_pkgs $pkg"
+done
+
+if [ -n "$missing_pkgs" ]; then
+    sudo apt update && sudo apt install -y $missing_pkgs
+fi
+
 echo "=============================================="
 echo " Renesas RDK Docker Cross-Build Setup"
 echo "=============================================="
