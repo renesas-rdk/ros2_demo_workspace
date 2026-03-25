@@ -1,0 +1,25 @@
+repositories:
+  src/agilex_piper_arm_description:
+    type: git
+    url: https://github.com/renesas-rdk/agilex_piper_arm_description.git
+    version: 80dccc74c32020fbbccfbe344c603b9a180e8be8
+  src/agilex_piper_mujoco:
+    type: git
+    url: https://github.com/renesas-rdk/agilex_piper_mujoco.git
+    version: 9d41de708a523430f88274f2eb15a70105461041
+  src/cartesian_controllers:
+    type: git
+    url: https://github.com/renesas-rdk/cartesian_controllers.git
+    version: 26df70c9654e0ca8f02e1d1e2a9f1403ab310e56
+  src/mujoco:
+    type: git
+    url: https://github.com/google-deepmind/mujoco.git
+    version: 3.3.0
+  src/mujoco_ros2_control:
+    type: git
+    url: https://github.com/renesas-rdk/mujoco_ros2_control.git
+    version: c71bef03e6ab1d758ce1db841a76280c9d3f15dd
+  src/mujoco_sim_ros2:
+    type: git
+    url: https://github.com/renesas-rdk/mujoco_sim_ros2.git
+    version: 9a228bb27ad9995682d1a3899e41e4de508eede4

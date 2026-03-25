@@ -1,0 +1,57 @@
+repositories:
+  src/arm_hand_control:
+    type: git
+    url: https://github.com/renesas-rdk/arm_hand_control.git
+    version: 760e84ebdb6b8cb74ccc1042139fa0b5d36e452a
+  src/foxglove_keypoint_publisher:
+    type: git
+    url: https://github.com/renesas-rdk/foxglove_keypoint_publisher.git
+    version: a5b6cf57706946b784e8249ca42c4471620e4603
+  src/inspire_rh56_dexhand:
+    type: git
+    url: https://github.com/renesas-rdk/inspire_rh56_dexhand.git
+    version: e91c670f62e67921d202f01d7b700db8dd2f1803
+  src/inspire_rh56_urdf:
+    type: git
+    url: https://github.com/renesas-rdk/inspire_rh56_urdf.git
+    version: 3dfd9388f714d0799c5d13f8d77058c8ffbf38cf
+  src/ruiyan_rh2_controller:
+    type: git
+    url: https://github.com/renesas-rdk/ruiyan_rh2_controller.git
+    version: d60a59dd6b1bb0ed3c240f80358431cc9abfd817
+  src/ruiyan_rh2_dexhand:
+    type: git
+    url: https://github.com/renesas-rdk/ruiyan_rh2_dexhand.git
+    version: 4c166100905c8d5e7363e95f4c03700d2ddf93d2
+  src/ruiyan_rh2_urdf:
+    type: git
+    url: https://github.com/renesas-rdk/ruiyan_rh2_urdf.git
+    version: 8bc48c64f063e5ad15a0924e81defc14e64412df
+  src/rzv_demo_rps:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_demo_rps.git
+    version: aab80f7cc0834531098f760f15334edb16f277ab
+  src/rzv_gold_yolo:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_gold_yolo.git
+    version: e1f01141c842950ad52d84aded9d29b99df5ac80
+  src/rzv_model:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_model.git
+    version: 457472fc9f40742247c6df89038f0da29e00bcfb
+  src/rzv_model_utils_ros2:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_model_utils_ros2.git
+    version: cb52ad7d40f3b15d806ecce79d8a8dd5706970f3
+  src/rzv_object_detection:
+    type: git
+    url: https://partnergitlab.renesas.solutions/sst1/industrial/ws078/rzv_ros_package/model_zoo/applications/rzv_object_detection.git
+    version: 03ad16a1a1a2ff7e062bfb87a916f90a99b0e4e6
+  src/rzv_yolov8:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_yolov8.git
+    version: c1cee9d7a9100ca1de2f554707fb6d296bc0d8ad
+  src/rzv_yolox:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_yolox.git
+    version: b704d958fc41b05428d6e4eea755e8460f560367
