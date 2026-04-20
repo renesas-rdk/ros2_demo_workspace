@@ -289,7 +289,8 @@ if [ "$AUTO_PREP" -eq 1 ] || confirm_yes "Run now?"; then
     docker exec "$CONTAINER_NAME" bash -c "
         sudo chown -R ubuntu:ubuntu /home/ubuntu/ros2_ws &&
         cp -r /home/ubuntu/toolchains/.vscode /home/ubuntu/ros2_ws/ &&
-        cp /home/ubuntu/toolchains/.clang-format /home/ubuntu/ros2_ws/
+        cp /home/ubuntu/toolchains/.clang-format /home/ubuntu/ros2_ws/ &&
+        cp -r /home/ubuntu/toolchains/.github /home/ubuntu/ros2_ws/
     "
     echo "Done."
 else
