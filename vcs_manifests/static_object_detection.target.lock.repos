@@ -1,7 +1,7 @@
 repositories:
   src/foxglove_keypoint_publisher:
     type: git
-    url: https://partnergitlab.renesas.solutions/sst1/industrial/ws078/rzv_ros_package/utils/foxglove_keypoint_publisher.git
+    url: https://github.com/renesas-rdk/foxglove_keypoint_publisher.git
     version: a5b6cf57706946b784e8249ca42c4471620e4603
   src/rzv_gold_yolo:
     type: git
@@ -17,7 +17,7 @@ repositories:
     version: cb52ad7d40f3b15d806ecce79d8a8dd5706970f3
   src/rzv_object_detection:
     type: git
-    url: https://partnergitlab.renesas.solutions/sst1/industrial/ws078/rzv_ros_package/model_zoo/applications/rzv_object_detection
+    url: https://github.com/renesas-rdk/rzv_object_detection.git
     version: 03ad16a1a1a2ff7e062bfb87a916f90a99b0e4e6
   src/rzv_yolov8:
     type: git
