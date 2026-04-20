@@ -15,6 +15,9 @@ AUTO_CREATE=0
 AUTO_PREP=0
 AUTO_SHELL=0
 
+# Global variable used by ask_input to return its result
+__INPUT_RESULT=""
+
 usage() {
     cat <<EOF
 Usage: $0 [options]
@@ -22,7 +25,7 @@ Usage: $0 [options]
 Options:
   -i, --image IMAGE            Docker image
   -n, --container-name NAME    Container name
-  -w, --workspace PATH         Host ROS 2 workspace path
+  -w, --workspace PATH         Host ROS 2 workspace path (absolute or relative)
   -y, --yes                    Non-interactive; accept yes for confirmations
       --pull                   Automatically pull/update image if needed
       --create                 Automatically create/start container if needed
@@ -33,6 +36,7 @@ Options:
 Examples:
   $0
   $0 -n my_container -w ~/ros2_ws
+  $0 -n my_container -w ./ros2_ws
   $0 -n my_container -w ~/ros2_ws -y --pull --create --prep
   $0 -n my_container -w ~/ros2_ws -y --pull --create --prep --shell
 EOF
@@ -45,17 +49,41 @@ require_cmd() {
     fi
 }
 
-expand_path() {
+# Resolve a user-supplied path to an absolute path.
+resolve_path() {
     local path="$1"
-    if [[ "$path" == "~" ]]; then
-        echo "$HOME"
-    elif [[ "$path" == ~/* ]]; then
-        echo "$HOME/${path#~/}"
-    else
-        echo "$path"
-    fi
+
+    # Expand ~ and ~user prefixes using case/glob to avoid regex pitfalls.
+    case "$path" in
+        "~")
+            path="$HOME"
+            ;;
+        "~"/*)
+            path="$HOME/${path:2}"
+            ;;
+        "~"*)
+            local username rest user_home
+            username="${path%%/*}"
+            username="${username#\~}"
+            rest="${path#*/}"
+            # If no slash found, rest == path (no subdirectory)
+            [ "$rest" = "$path" ] && rest="" || rest="/$rest"
+            user_home="$(getent passwd "$username" 2>/dev/null | cut -d: -f6)" || true
+            if [ -z "$user_home" ]; then
+                echo "Error: cannot resolve home directory for user '$username'" >&2
+                return 1
+            fi
+            path="${user_home}${rest}"
+            ;;
+    esac
+
+    # Resolve ., .., symlinks, and make the path absolute.
+    # -m: no error if the path does not exist yet.
+    realpath -m -- "$path"
 }
 
+# Sets __INPUT_RESULT instead of echoing, so it works
+# correctly even when called from the main shell (no subshell).
 ask_input() {
     local prompt="$1"
     local default_value="$2"
@@ -63,9 +91,9 @@ ask_input() {
 
     read -r -p "$prompt [default: $default_value]: " user_input
     if [ -z "$user_input" ]; then
-        echo "$default_value"
+        __INPUT_RESULT="$default_value"
     else
-        echo "$user_input"
+        __INPUT_RESULT="$user_input"
     fi
 }
 
@@ -164,7 +192,8 @@ echo "=============================================="
 echo
 
 if [ -z "$CONTAINER_NAME" ]; then
-    CONTAINER_NAME="$(ask_input "Enter container name" "$DEFAULT_CONTAINER_NAME")"
+    ask_input "Enter container name" "$DEFAULT_CONTAINER_NAME"
+    CONTAINER_NAME="$__INPUT_RESULT"
     if docker ps -a --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
         echo
         echo "A Docker container named '$CONTAINER_NAME' already exists."
@@ -176,12 +205,13 @@ if [ -z "$CONTAINER_NAME" ]; then
 fi
 
 if [ -z "$ROS2_WS" ]; then
-    ROS2_WS_INPUT="$(ask_input "Enter ROS 2 workspace path on host" "$DEFAULT_ROS2_WS")"
+    ask_input "Enter ROS 2 workspace path on host (absolute or relative)" "$DEFAULT_ROS2_WS"
+    ROS2_WS_INPUT="$__INPUT_RESULT"
 else
     ROS2_WS_INPUT="$ROS2_WS"
 fi
 
-ROS2_WS="$(realpath -m "$(expand_path "$ROS2_WS_INPUT")")"
+ROS2_WS="$(resolve_path "$ROS2_WS_INPUT")"
 
 echo
 echo "Configuration:"
