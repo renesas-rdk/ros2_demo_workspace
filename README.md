@@ -27,7 +27,7 @@ Each manifest imports a different set of repositories into `src/`.
   Rock-paper-scissors demo with hand control, object detection, and dexterous hand packages.
 - `static_object_detection.target.lock.repos`
   Static object detection stack built around Renesas model and detection packages.
-- `vision_based_dexterous_dand.target.lock.repos`
+- `vision_based_dexterous_hand.target.lock.repos`
   Vision-based dexterous hand demo packages for target deployment.
 - `vision_based_robotic_arm_teleoperation.target.lock.repos`
   Full target-side teleoperation stack including arm, hand, perception, and bringup packages.
