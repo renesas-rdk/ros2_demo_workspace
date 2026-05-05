@@ -301,10 +301,28 @@ fi
 echo
 echo "==> Container '$CONTAINER_NAME' does not exist."
 if [ "$AUTO_CREATE" -eq 1 ] || confirm_yes "Create and start container now?"; then
+    # Docker-outside-of-Docker: bind-mount the host docker socket so
+    # tooling inside the container (e.g. farm-image build/push) can
+    # use the host daemon. Pass the host's docker-group GID via
+    # --group-add so the non-root `ubuntu` user can read the socket
+    # without changing the image.
+    DOOD_ARGS=()
+    if [ -S /var/run/docker.sock ]; then
+        HOST_DOCKER_GID="$(stat -c %g /var/run/docker.sock)"
+        DOOD_ARGS=(
+            -v /var/run/docker.sock:/var/run/docker.sock
+            --group-add "$HOST_DOCKER_GID"
+        )
+        echo "Mounting host docker socket (GID $HOST_DOCKER_GID)."
+    else
+        echo "Note: /var/run/docker.sock not found on host; docker-in-container disabled."
+    fi
+
     docker run -dt --name "$CONTAINER_NAME" \
         --privileged \
         --hostname ubuntu-xbuild \
         -v "$ROS2_WS:/home/ubuntu/ros2_ws" \
+        "${DOOD_ARGS[@]}" \
         "$IMAGE" >/dev/null
     echo "Container created and started."
 else
