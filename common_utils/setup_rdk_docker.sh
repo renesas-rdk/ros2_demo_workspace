@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
-# setup_rdk_docker.sh: quick setup script for a Docker environment used to cross-build applications for the RZ/V2H RDK
+# setup_rdk_docker.sh: quick setup script for a Docker environment used to cross-build applications for the Renesas ARM64 platforms (R-Car V4H, RZ/V2H)
 set -euo pipefail
 
 DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:latest"
 DEFAULT_CONTAINER_NAME="ros2_cross_build_container"
 DEFAULT_ROS2_WS="$HOME/ros2_ws"
+
+PLATFORM="${1:-}"
+if [ "$PLATFORM" == "rcarv4h" ]; then
+    DEFAULT_IMAGE="ghcr.io/renesas-rdk/rcarv4h_ubuntu_xbuild:latest"
+    shift
+elif [ "$PLATFORM" == "rzv2h" ]; then
+    DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:latest"
+    shift
+fi
 
 IMAGE="$DEFAULT_IMAGE"
 CONTAINER_NAME=""
@@ -20,7 +29,11 @@ __INPUT_RESULT=""
 
 usage() {
     cat <<EOF
-Usage: $0 [options]
+Usage: $0 [platform] [options]
+
+Platform: if specified, sets the default image and some config for a particular Renesas platform. If not specified, defaults to RZ/V2H.
+  rcarv4h                      Use R-Car V4H image
+  rzv2h                        Use RZ/V2H image (default)
 
 Options:
   -i, --image IMAGE            Docker image
@@ -35,10 +48,14 @@ Options:
 
 Examples:
   $0
-  $0 -n my_container -w ~/ros2_ws
-  $0 -n my_container -w ./ros2_ws
-  $0 -n my_container -w ~/ros2_ws -y --pull --create --prep
-  $0 -n my_container -w ~/ros2_ws -y --pull --create --prep --shell
+  $0 rcarv4h
+  $0 rzv2h
+  $0 rcarv4h -n my_container -w ~/ros2_ws
+  $0 rzv2h -n my_container -w ~/ros2_ws
+  $0 rcarv4h -n my_container -w ~/ros2_ws -y --pull --create --prep
+  $0 rzv2h -n my_container -w ~/ros2_ws -y --pull --create --prep
+  $0 rcarv4h -n my_container -w ~/ros2_ws -y --pull --create --prep --shell
+  $0 rzv2h -n my_container -w ~/ros2_ws -y --pull --create --prep --shell
 EOF
 }
 
@@ -338,7 +355,9 @@ if [ "$AUTO_PREP" -eq 1 ] || confirm_yes "Run now?"; then
         sudo chown -R ubuntu:ubuntu /home/ubuntu/ros2_ws &&
         cp -r /home/ubuntu/toolchains/.vscode /home/ubuntu/ros2_ws/ &&
         cp /home/ubuntu/toolchains/.clang-format /home/ubuntu/ros2_ws/ &&
-        cp -r /home/ubuntu/toolchains/.github /home/ubuntu/ros2_ws/
+        cp -r /home/ubuntu/toolchains/.github /home/ubuntu/ros2_ws/ &&
+        cp /home/ubuntu/toolchains/AGENTS.md /home/ubuntu/ros2_ws/ &&
+        cp -r /home/ubuntu/toolchains/.claude /home/ubuntu/ros2_ws/
     "
     echo "Done."
 else
