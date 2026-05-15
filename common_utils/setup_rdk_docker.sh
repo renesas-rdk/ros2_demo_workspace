@@ -5,6 +5,10 @@ set -euo pipefail
 DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:latest"
 DEFAULT_CONTAINER_NAME="ros2_cross_build_container"
 DEFAULT_ROS2_WS="$HOME/ros2_ws"
+REMOTE_SCRIPT_URL="https://github.com/renesas-rdk/ros2_demo_workspace/raw/refs/heads/main/common_utils/setup_rdk_docker.sh"
+
+# Original args, preserved so we can re-exec after a self-update.
+ORIG_ARGS=("$@")
 
 PLATFORM="${1:-}"
 if [ "$PLATFORM" == "rcarv4h" ]; then
@@ -23,6 +27,7 @@ AUTO_PULL=0
 AUTO_CREATE=0
 AUTO_PREP=0
 AUTO_SHELL=0
+SKIP_SELF_UPDATE=0
 
 # Global variable used by ask_input to return its result
 __INPUT_RESULT=""
@@ -44,6 +49,7 @@ Options:
       --create                 Automatically create/start container if needed
       --prep                   Automatically prepare workspace
       --shell                  Open shell in container after setup
+      --no-self-update         Skip checking the remote repo for a newer script
   -h, --help                   Show this help
 
 Examples:
@@ -139,6 +145,73 @@ confirm_no_default() {
     [[ "$reply" =~ ^[Yy]$ ]]
 }
 
+# Check the remote repository for a newer version of this script and, with
+# the user's consent, replace the local copy and re-execute it.
+self_update() {
+    # Avoid infinite re-exec loop and honor explicit opt-out.
+    if [ "${RDK_SCRIPT_SELF_UPDATED:-0}" = "1" ] || [ "$SKIP_SELF_UPDATE" -eq 1 ]; then
+        return 0
+    fi
+
+    local script_path
+    script_path="$(realpath -- "${BASH_SOURCE[0]}" 2>/dev/null || true)"
+    if [ -z "$script_path" ] || [ ! -f "$script_path" ]; then
+        return 0
+    fi
+
+    local downloader=""
+    if command -v curl >/dev/null 2>&1; then
+        downloader="curl"
+    elif command -v wget >/dev/null 2>&1; then
+        downloader="wget"
+    else
+        echo "Note: neither curl nor wget is available; skipping self-update check."
+        return 0
+    fi
+
+    local tmp_file
+    tmp_file="$(mktemp)"
+    trap 'rm -f "$tmp_file"' RETURN
+
+    echo
+    echo "==> Checking remote for a newer version of this script..."
+    echo "==> Fetching $REMOTE_SCRIPT_URL"
+    local fetch_ok=0
+    if [ "$downloader" = "curl" ]; then
+        curl -fsSL -o "$tmp_file" "$REMOTE_SCRIPT_URL" && fetch_ok=1 || true
+    else
+        wget -q -O "$tmp_file" "$REMOTE_SCRIPT_URL" && fetch_ok=1 || true
+    fi
+
+    if [ "$fetch_ok" -ne 1 ] || [ ! -s "$tmp_file" ]; then
+        echo "Could not fetch remote script; continuing with current version."
+        return 0
+    fi
+
+    if cmp -s "$script_path" "$tmp_file"; then
+        echo "Script is already up to date."
+        return 0
+    fi
+
+    echo "A newer version of the script is available."
+    if ! confirm_yes "Update local script and restart with the new version?"; then
+        echo "Update skipped."
+        return 0
+    fi
+
+    chmod --reference="$script_path" "$tmp_file" 2>/dev/null || chmod +x "$tmp_file"
+    if ! mv "$tmp_file" "$script_path"; then
+        echo "Failed to write '$script_path' (permission denied?). Continuing with current version."
+        return 0
+    fi
+    # mv succeeded; tmp_file no longer exists, so cancel the RETURN trap cleanup.
+    trap - RETURN
+
+    echo "Script updated. Re-executing..."
+    export RDK_SCRIPT_SELF_UPDATED=1
+    exec "$script_path" "${ORIG_ARGS[@]}"
+}
+
 parse_args() {
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -174,6 +247,10 @@ parse_args() {
                 AUTO_SHELL=1
                 shift
                 ;;
+            --no-self-update)
+                SKIP_SELF_UPDATE=1
+                shift
+                ;;
             -h|--help)
                 usage
                 exit 0
@@ -189,6 +266,8 @@ parse_args() {
 }
 
 parse_args "$@"
+
+self_update
 
 require_cmd docker
 require_cmd realpath
