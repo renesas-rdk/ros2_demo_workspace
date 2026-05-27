@@ -2,88 +2,84 @@ repositories:
   src/agilex_piper_arm_bringup:
     type: git
     url: https://github.com/renesas-rdk/agilex_piper_arm_bringup.git
-    version: 281d310e836440b0c213b7631e93fbf7ae202b56
-  src/agilex_piper_controller:
-    type: git
-    url: https://github.com/renesas-rdk/agilex_piper_controller.git
-    version: cca8b7b86fd39f97ce236348266332ef0d19a372
-  src/agilex_piper_utils:
-    type: git
-    url: https://github.com/renesas-rdk/agilex_piper_utils.git
-    version: a8a35d17469aa1db3992ca3885eaf447e506568e
+    version: b8ed688a683ab59d9d3638d96610ad82bd14f680
   src/agilex_piper_arm_description:
     type: git
     url: https://github.com/renesas-rdk/agilex_piper_arm_description.git
-    version: 80dccc74c32020fbbccfbe344c603b9a180e8be8
+    version: 3737e1350710c873a66849db911fc6507c157713
+  src/agilex_piper_controller:
+    type: git
+    url: https://github.com/renesas-rdk/agilex_piper_controller.git
+    version: 576cf374aab9cc197e2eeb9d8164b5cca99d1839
   src/agilex_piper_ros2_control:
     type: git
     url: https://github.com/renesas-rdk/agilex_piper_ros2_control.git
-    version: 13d7c7192964041dc877b9c0fa8ad8ee1248d6b0
+    version: 1826db7fa82b59f2bf529b05732dc73ee6ac2595
+  src/agilex_piper_utils:
+    type: git
+    url: https://github.com/renesas-rdk/agilex_piper_utils.git
+    version: 1877dc9d903a61331fc9112428b511e59be347d0
   src/arm_hand_control:
     type: git
     url: https://github.com/renesas-rdk/arm_hand_control.git
-    version: 760e84ebdb6b8cb74ccc1042139fa0b5d36e452a
+    version: 52d9558d4ff840e89f930943354db61425ba6f27
   src/cartesian_controllers:
     type: git
     url: https://github.com/renesas-rdk/cartesian_controllers.git
     version: 26df70c9654e0ca8f02e1d1e2a9f1403ab310e56
+  src/dexhand_utils:
+    type: git
+    url: https://github.com/renesas-rdk/dexhand_utils.git
+    version: a70b546e1589f69dffaa4ff4a3cbec0b1422e58a
   src/foxglove_keypoint_publisher:
     type: git
     url: https://github.com/renesas-rdk/foxglove_keypoint_publisher.git
-    version: a5b6cf57706946b784e8249ca42c4471620e4603
-  src/rzv_playground:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_playground.git
-    version: bb51b5f01e2b5cb488dd867925d4d464b11ad119
-  src/rzv_model:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_model.git
-    version: 457472fc9f40742247c6df89038f0da29e00bcfb
-  src/rzv_model_utils_ros2:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_model_utils_ros2.git
-    version: cb52ad7d40f3b15d806ecce79d8a8dd5706970f3
-  src/rzv_yolox:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_yolox.git
-    version: b704d958fc41b05428d6e4eea755e8460f560367
-  src/rzv_mediapipe:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_mediapipe.git
-    version: 9587f3c84e9b4d871f05190f6d1a7ef625dca19d
-  src/rzv_rtmpose:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_rtmpose.git
-    version: c1ba25b3325cafeb67fbbeb19de517087aaf279a
-  src/rzv_hrnetv2:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_hrnetv2.git
-    version: bd509703ce460c192b7145189cfe9bc271300f42
-  src/rzv_pose_estimation:
-    type: git
-    url: https://github.com/renesas-rdk/rzv_pose_estimation.git
-    version: acd590aaaee8f1b9a3b55af670e525ebf5fde041
-  src/inspire_rh56_hand_description:
-    type: git
-    url: https://github.com/renesas-rdk/inspire_rh56_hand_description.git
-    version: b5c8457fb0b5b4979389d4cbcbb04855d3900221
-  src/inspire_rh56_dexhand:
-    type: git
-    url: https://github.com/renesas-rdk/inspire_rh56_dexhand.git
-    version: e91c670f62e67921d202f01d7b700db8dd2f1803
+    version: 45b77cff77708fa01558139e3ece10aa04b1cbc9
   src/inspire_rh56_hand_bringup:
     type: git
     url: https://github.com/renesas-rdk/inspire_rh56_hand_bringup.git
-    version: 8344742c2eea36c30e323e8048bca6c8732bcc15
-  src/inspire_rh56_hand_utils:
+    version: ae1095a4f31f0730208d7101e8467b867922842f
+  src/inspire_rh56_hand_description:
     type: git
-    url: https://github.com/renesas-rdk/inspire_rh56_hand_utils.git
-    version: c16a5f554b596631219d85b263cd9aadc41cdcdd
+    url: https://github.com/renesas-rdk/inspire_rh56_hand_description.git
+    version: 39bfca04a69912e6561628156d1c63e37698eb75
   src/inspire_rh56_hand_ros2_control:
     type: git
     url: https://github.com/renesas-rdk/inspire_rh56_hand_ros2_control.git
-    version: 352e61c792accf3789792da6628e7dadab0217fc
+    version: 5c91154b0aa82f6bbc1eaa0e2c350fc7c7c57e87
   src/piper_arm_inspire_hand_bringup:
     type: git
     url: https://github.com/renesas-rdk/piper_arm_inspire_hand_bringup.git
-    version: 1c978ed0f96a3cd0342edca3eb00420751fbedad
+    version: 2de336b67cfd1da3e7863a8fea58cef55622b9e6
+  src/rzv_hrnetv2:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_hrnetv2.git
+    version: 4c8d80c421511193276d1c529a6c8ab574e031ee
+  src/rzv_mediapipe:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_mediapipe.git
+    version: 939274ba9fee0d0b98412d15c7127a71c612dbf0
+  src/rzv_model:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_model.git
+    version: b094772685485620e94fba7316b9bc075518c83c
+  src/rzv_model_utils_ros2:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_model_utils_ros2.git
+    version: 5428faa59d3233e37f6a7e8a0fd50728d58c40ef
+  src/rzv_playground:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_playground.git
+    version: 1f7143b2f5905ab2b10f19c361eeb6d7bab3a4f4
+  src/rzv_pose_estimation:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_pose_estimation.git
+    version: 295892d526c62b681fdd5ccec7f3e2ae38a95d92
+  src/rzv_rtmpose:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_rtmpose.git
+    version: 23bc4ec6b975ae13b7066e9993d2d4866f467802
+  src/rzv_yolox:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_yolox.git
+    version: bfd2fc618d43b4cf87be53ba2ea05b730f3166d7

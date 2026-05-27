@@ -35,14 +35,18 @@ repositories:
     type: git
     url: https://github.com/renesas-rdk/ruiyan_rh2_hand_ros2_control.git
     version: 756a67a62ab17e1c7b1c5bfadb32e4acf68e62bc
-  src/rzv_demo_rps:
+  src/rzv_demo_dexhand:
     type: git
-    url: https://github.com/renesas-rdk/rzv_demo_rps.git
-    version: 189885cc8bd603ae80d125ccb1307f9a6d054063
-  src/rzv_gold_yolo:
+    url: https://github.com/renesas-rdk/rzv_demo_dexhand.git
+    version: fa0d18d831592415f4f69cc67cafe4a728bbabb5
+  src/rzv_hrnetv2:
     type: git
-    url: https://github.com/renesas-rdk/rzv_gold_yolo.git
-    version: d9d19a734783daddea6bfa52bb85f07d17e6e2cd
+    url: https://github.com/renesas-rdk/rzv_hrnetv2.git
+    version: 4c8d80c421511193276d1c529a6c8ab574e031ee
+  src/rzv_mediapipe:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_mediapipe.git
+    version: 939274ba9fee0d0b98412d15c7127a71c612dbf0
   src/rzv_model:
     type: git
     url: https://github.com/renesas-rdk/rzv_model.git
@@ -51,14 +55,14 @@ repositories:
     type: git
     url: https://github.com/renesas-rdk/rzv_model_utils_ros2.git
     version: 5428faa59d3233e37f6a7e8a0fd50728d58c40ef
-  src/rzv_object_detection:
+  src/rzv_pose_estimation:
     type: git
-    url: https://github.com/renesas-rdk/rzv_object_detection.git
-    version: 6739dcd3feeea34bcf3ac6162d4697f9c96f1512
-  src/rzv_yolov8:
+    url: https://github.com/renesas-rdk/rzv_pose_estimation.git
+    version: 295892d526c62b681fdd5ccec7f3e2ae38a95d92
+  src/rzv_rtmpose:
     type: git
-    url: https://github.com/renesas-rdk/rzv_yolov8.git
-    version: 5e45105c925d8cfd92cb0deb318fc0aa62aa99e5
+    url: https://github.com/renesas-rdk/rzv_rtmpose.git
+    version: 23bc4ec6b975ae13b7066e9993d2d4866f467802
   src/rzv_yolox:
     type: git
     url: https://github.com/renesas-rdk/rzv_yolox.git
