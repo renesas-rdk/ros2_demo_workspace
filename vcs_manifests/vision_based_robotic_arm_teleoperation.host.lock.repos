@@ -2,11 +2,11 @@ repositories:
   src/agilex_piper_arm_description:
     type: git
     url: https://github.com/renesas-rdk/agilex_piper_arm_description.git
-    version: 80dccc74c32020fbbccfbe344c603b9a180e8be8
+    version: 3737e1350710c873a66849db911fc6507c157713
   src/agilex_piper_mujoco:
     type: git
     url: https://github.com/renesas-rdk/agilex_piper_mujoco.git
-    version: 9d41de708a523430f88274f2eb15a70105461041
+    version: cf0d35c06e19002dc8fea059118b2dceea5a50e9
   src/cartesian_controllers:
     type: git
     url: https://github.com/renesas-rdk/cartesian_controllers.git
