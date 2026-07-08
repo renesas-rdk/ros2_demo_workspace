@@ -11,7 +11,7 @@
 
 $ErrorActionPreference = 'Stop'
 
-$DefaultImage         = 'ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:latest'
+$DefaultImage         = 'ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch'
 $DefaultContainerName = 'ros2_cross_build_container'
 $DefaultRos2Ws        = Join-Path $HOME 'ros2_ws'
 $RemoteScriptUrl      = 'https://github.com/renesas-rdk/ros2_demo_workspace/raw/refs/heads/main/common_utils/setup_rdk_docker.ps1'
@@ -26,8 +26,8 @@ $OrigArgs = @($args)
 $argList = [System.Collections.ArrayList]@($args)
 if ($argList.Count -gt 0) {
     switch ([string]$argList[0]) {
-        'rcarv4h' { $DefaultImage = 'ghcr.io/renesas-rdk/rcarv4h_ubuntu_xbuild:latest'; $argList.RemoveAt(0) }
-        'rzv2h'   { $DefaultImage = 'ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:latest';   $argList.RemoveAt(0) }
+        'rcarv4h' { $DefaultImage = 'ghcr.io/renesas-rdk/rcarv4h_ubuntu_xbuild:multiarch'; $argList.RemoveAt(0) }
+        'rzv2h'   { $DefaultImage = 'ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch';   $argList.RemoveAt(0) }
     }
 }
 

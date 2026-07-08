@@ -2,7 +2,7 @@
 # setup_rdk_docker.sh: quick setup script for a Docker environment used to cross-build applications for the Renesas ARM64 platforms (R-Car V4H, RZ/V2H)
 set -euo pipefail
 
-DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:latest"
+DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch"
 DEFAULT_CONTAINER_NAME="ros2_cross_build_container"
 DEFAULT_ROS2_WS="$HOME/ros2_ws"
 REMOTE_SCRIPT_URL="https://github.com/renesas-rdk/ros2_demo_workspace/raw/refs/heads/main/common_utils/setup_rdk_docker.sh"
@@ -12,10 +12,10 @@ ORIG_ARGS=("$@")
 
 PLATFORM="${1:-}"
 if [ "$PLATFORM" == "rcarv4h" ]; then
-    DEFAULT_IMAGE="ghcr.io/renesas-rdk/rcarv4h_ubuntu_xbuild:latest"
+    DEFAULT_IMAGE="ghcr.io/renesas-rdk/rcarv4h_ubuntu_xbuild:multiarch"
     shift
 elif [ "$PLATFORM" == "rzv2h" ]; then
-    DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:latest"
+    DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch"
     shift
 fi
 
