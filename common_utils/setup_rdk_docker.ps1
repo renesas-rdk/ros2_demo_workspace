@@ -77,6 +77,21 @@ function Test-Command {
     return [bool](Get-Command $Name -ErrorAction SilentlyContinue)
 }
 
+# Run a native command (docker) so that a non-zero exit / stderr output is
+# reported via $LASTEXITCODE instead of aborting the script. See the header
+# note for why this is necessary under $ErrorActionPreference = 'Stop'.
+# Any stdout produced by the script block is returned to the caller.
+function Invoke-WithNativeErrors {
+    param([Parameter(Mandatory)][scriptblock]$ScriptBlock)
+    $prevEAP = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        & $ScriptBlock
+    } finally {
+        $ErrorActionPreference = $prevEAP
+    }
+}
+
 function Confirm-Yes {
     param([string]$Prompt)
     if ($AutoYes) { return $true }
@@ -110,7 +125,7 @@ function Resolve-InputPath {
 }
 
 function Get-DockerNativeArch {
-    $arch = (docker info --format '{{.Architecture}}' 2>$null)
+    $arch = Invoke-WithNativeErrors { docker info --format '{{.Architecture}}' 2>$null }
     switch -Regex ("$arch") {
         '^(amd64|x86_64)$'  { return 'amd64' }
         '^(arm64|aarch64)$' { return 'arm64' }
@@ -128,13 +143,13 @@ function Get-PlatformArch {
 }
 
 function Test-LocalImage {
-    docker image inspect $Image *> $null
+    Invoke-WithNativeErrors { docker image inspect $Image *> $null }
     if ($LASTEXITCODE -ne 0) { return $false }
 
     $expected = Get-PlatformArch
     if ([string]::IsNullOrEmpty($expected)) { return $true }
 
-    $localArch = (docker image inspect $Image --format '{{.Architecture}}' 2>$null)
+    $localArch = Invoke-WithNativeErrors { docker image inspect $Image --format '{{.Architecture}}' 2>$null }
     return ("$localArch" -eq $expected)
 }
 
@@ -145,6 +160,31 @@ function Get-ImageRepo {
     $lastColon = $Ref.LastIndexOf(':')
     if ($lastColon -gt $lastSlash) { return $Ref.Substring(0, $lastColon) }
     return $Ref
+}
+
+# Return the local image's registry digest (sha256:...) or '' if it can't be
+# determined. Tries .RepoDigests first, then the `docker images --digests`
+# table as a fallback: the containerd image store does not always populate
+# .RepoDigests for multi-arch images, which would otherwise make an image that
+# is present locally look like it has no digest.
+function Get-LocalImageDigest {
+    $repo = Get-ImageRepo $Image
+
+    $repoDigests = @(Invoke-WithNativeErrors { docker image inspect $Image --format '{{join .RepoDigests "\n"}}' 2>$null })
+    foreach ($line in $repoDigests) {
+        if ($line -like "$repo@sha256:*") { return ($line -split '@', 2)[1] }
+    }
+
+    # Fallback: read the Digest column from `docker images --digests`.
+    $rows = @(Invoke-WithNativeErrors { docker images --digests --format '{{.Repository}}:{{.Tag}} {{.Digest}}' 2>$null })
+    foreach ($row in $rows) {
+        $parts = $row -split '\s+', 2
+        if ($parts.Count -eq 2 -and $parts[0] -eq $Image -and $parts[1] -like 'sha256:*') {
+            return $parts[1]
+        }
+    }
+
+    return ''
 }
 
 # Check the remote repository for a newer version of this script and, with the
@@ -262,7 +302,7 @@ if ([string]::IsNullOrEmpty($ContainerName)) {
     if ([string]::IsNullOrEmpty($reply)) { $ContainerName = $DefaultContainerName } else { $ContainerName = $reply }
 }
 
-$existingNames = @(docker ps -a --format '{{.Names}}')
+$existingNames = @(Invoke-WithNativeErrors { docker ps -a --format '{{.Names}}' })
 if ($existingNames -contains $ContainerName) {
     Write-Host ''
     Write-Host "A Docker container named '$ContainerName' already exists."
@@ -309,11 +349,8 @@ Write-Host ''
 Write-Host '==> Checking local image...'
 if (Test-LocalImage) {
     Write-Host 'Local image exists.'
-    $repoDigests = @(docker image inspect $Image --format '{{join .RepoDigests "\n"}}' 2>$null)
-    foreach ($line in $repoDigests) {
-        if ($line -like "$ImageRepo@sha256:*") { $LocalDigest = ($line -split '@')[1]; break }
-    }
-    if ($LocalDigest) { Write-Host "Local digest: $LocalDigest" } else { Write-Host 'Local digest not available.' }
+    $LocalDigest = Get-LocalImageDigest
+    if ($LocalDigest) { Write-Host "Local digest: $LocalDigest" } else { Write-Host 'Local digest could not be determined.' }
 } else {
     Write-Host 'Local image does not exist for the requested platform.'
     $ShouldPull = $true
@@ -321,10 +358,10 @@ if (Test-LocalImage) {
 
 if (-not $ShouldPull) {
     Write-Host ''
-    docker buildx version *> $null
+    Invoke-WithNativeErrors { docker buildx version *> $null }
     if ($LASTEXITCODE -eq 0) {
         Write-Host '==> Checking remote image digest...'
-        $remoteRaw = @(docker buildx imagetools inspect $Image 2>$null)
+        $remoteRaw = @(Invoke-WithNativeErrors { docker buildx imagetools inspect $Image 2>$null })
         if ($LASTEXITCODE -eq 0) {
             foreach ($line in $remoteRaw) {
                 if ($line -match 'Digest:\s+(\S+)') { $RemoteDigest = $matches[1]; break }
@@ -345,8 +382,11 @@ if (-not $ShouldPull) {
             Write-Host 'Local image is up to date.'
         }
     } elseif (-not $LocalDigest -and $RemoteDigest) {
-        Write-Host 'Local digest unavailable. Pull required.'
-        $ShouldPull = $true
+        # The image is present locally (Test-LocalImage was true); we simply
+        # couldn't read its digest to compare. Keep it rather than pretending
+        # it's missing. Use --pull to force an update.
+        Write-Host 'Local image is present but its digest could not be verified; keeping it.'
+        Write-Host 'Use --pull to force an update.'
     } else {
         Write-Host 'Remote comparison unavailable. Keeping local image.'
     }
@@ -356,7 +396,7 @@ if ($ShouldPull) {
     Write-Host ''
     if ($AutoPull -or (Confirm-Yes 'Pull/update image now?')) {
         Write-Host '==> Pulling Docker image...'
-        docker pull @PlatformArgs $Image
+        Invoke-WithNativeErrors { docker pull @PlatformArgs $Image }
         if ($LASTEXITCODE -ne 0) { Write-Host 'Error: docker pull failed.'; exit 1 }
     } else {
         Write-Host 'Image pull skipped by user.'
@@ -377,7 +417,7 @@ if ($AutoCreate -or (Confirm-Yes 'Create and start container now?')) {
     $runArgs += $PlatformArgs
     $runArgs += @('--privileged', '--hostname', 'ubuntu-xbuild', '-v', "${Ros2Ws}:/home/ubuntu/ros2_ws", $Image)
 
-    docker @runArgs | Out-Null
+    Invoke-WithNativeErrors { docker @runArgs | Out-Null }
     if ($LASTEXITCODE -ne 0) { Write-Host 'Error: docker run failed.'; exit 1 }
     Write-Host 'Container created and started.'
 } else {
