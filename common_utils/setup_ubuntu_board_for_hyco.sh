@@ -26,7 +26,6 @@ IMAGE_REPO="reaction/tvm-app-linux-v4h2-cpu"
 STAGE="/tmp/rcar-app-libs"
 
 SSH="sshpass -p $PASS ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10"
-SCP="sshpass -p $PASS scp -o StrictHostKeyChecking=no -q"
 
 # --- Resolve the SDK version -------------------------------------------------
 # The SDK always installs under /opt/rcar-xos/<version>. Pick the newest install
@@ -86,8 +85,9 @@ done
 echo "    $(ls "$STAGE" | wc -l) files, $(du -sh "$STAGE" | cut -f1)"
 
 echo "==> [1/3] Uploading libraries to $USER_@$HOST"
-$SSH "$USER_@$HOST" 'rm -rf /tmp/rcar-app-libs'
-$SCP -r "$STAGE" "$USER_@$HOST:/tmp/"
+# Transfer with libs with tar
+tar -C "$(dirname "$STAGE")" -czf - "$(basename "$STAGE")" \
+  | $SSH "$USER_@$HOST" 'rm -rf /tmp/rcar-app-libs && tar -C /tmp -xzf -'
 
 echo "==> [2/3] Configuring the board"
 $SSH "$USER_@$HOST" "PASS='$PASS' bash -s" <<'REMOTE'
