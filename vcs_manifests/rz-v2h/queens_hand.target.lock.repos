@@ -1,0 +1,65 @@
+repositories:
+  src/agilex_piper_arm:
+    type: git
+    url: https://github.com/renesas-rdk/agilex_piper_arm.git
+    version: d9705de2fcd3ef843a8798fbbadc1c0268d67a80
+  src/behavior_tree:
+    type: git
+    url: https://github.com/renesas-rdk/behavior_tree.git
+    version: 15e5fb42f3ac7016512d245532aa6234ecaf803f
+  src/cartesian_controllers:
+    type: git
+    url: https://github.com/renesas-rdk/cartesian_controllers.git
+    version: bb3bcc4ec15f8c62c98b32e153ca4f064b23de7d
+  src/chess_play_assistant:
+    type: git
+    url: https://github.com/renesas-rdk/chess_play_assistant.git
+    version: 4b318344828d55537ca7af50b70e89203275d266
+  src/chessboard_analyzer:
+    type: git
+    url: https://github.com/renesas-rdk/chessboard_analyzer.git
+    version: f3a0a6582cec95940d8da69586692e211875c89f
+  src/dexhand_utils:
+    type: git
+    url: https://github.com/renesas-rdk/dexhand_utils.git
+    version: 7d3e4a50b1487d9732f09a2d2655602835abd206
+  src/foxglove_keypoint_publisher:
+    type: git
+    url: https://github.com/renesas-rdk/foxglove_keypoint_publisher.git
+    version: 30b52b8c64f2aeca651e7dbe2cfe91b7416f31a8
+  src/inspire_rh56e2_hand:
+    type: git
+    url: https://github.com/renesas-rdk/inspire_rh56e2_hand.git
+    version: 81bdb56a68b48b098e30f4dd516d0e6243733807
+  src/piper_arm_inspire_rh56e2_hand_bringup:
+    type: git
+    url: https://github.com/renesas-rdk/piper_arm_inspire_rh56e2_hand_bringup.git
+    version: 4ff81b583d911e4b78a7c76c8a604d136351ed2f
+  src/piper_arm_ruiyan_hand_bringup:
+    type: git
+    url: https://github.com/renesas-rdk/piper_arm_ruiyan_hand_bringup.git
+    version: 3bf9079df4565ac12a85da078df0697a9df0800a
+  src/renesas_demo_queens_hand:
+    type: git
+    url: https://github.com/renesas-rdk/renesas_demo_queens_hand.git
+    version: 0384dcb3d1d97e1fc08a2d8b5bd4aae63bdd65a0
+  src/renesas_model_utils_ros2:
+    type: git
+    url: https://github.com/renesas-rdk/renesas_model_utils_ros2.git
+    version: ebb58418344ce0c82dd0be947f1a5201889575b2
+  src/ruiyan_rh2_hand:
+    type: git
+    url: https://github.com/renesas-rdk/ruiyan_rh2_hand.git
+    version: fcc1de4c4ae5665519e948463d54f5c51d78f7e8
+  src/rzv_chess_pieces_detection:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_chess_pieces_detection.git
+    version: e5db3bb46f4e796b136cd760c72182027e21d24d
+  src/rzv_model:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_model.git
+    version: b094772685485620e94fba7316b9bc075518c83c
+  src/rzv_yolov8:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_yolov8.git
+    version: 5e45105c925d8cfd92cb0deb318fc0aa62aa99e5

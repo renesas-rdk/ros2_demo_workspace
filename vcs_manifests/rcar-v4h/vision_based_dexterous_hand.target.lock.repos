@@ -1,0 +1,49 @@
+repositories:
+  src/arm_hand_control:
+    type: git
+    url: https://github.com/renesas-rdk/arm_hand_control.git
+    version: e7bc3e1bc741b025ae956431b07217f4aeb99ffd
+  src/dexhand_utils:
+    type: git
+    url: https://github.com/renesas-rdk/dexhand_utils.git
+    version: 7d3e4a50b1487d9732f09a2d2655602835abd206
+  src/foxglove_keypoint_publisher:
+    type: git
+    url: https://github.com/renesas-rdk/foxglove_keypoint_publisher.git
+    version: 30b52b8c64f2aeca651e7dbe2cfe91b7416f31a8
+  src/inspire_rh56_hand:
+    type: git
+    url: https://github.com/renesas-rdk/inspire_rh56_hand.git
+    version: 63be2c44440b7717d111e5176a1dff4d02a98dda
+  src/inspire_rh56e2_hand:
+    type: git
+    url: https://github.com/renesas-rdk/inspire_rh56e2_hand.git
+    version: 81bdb56a68b48b098e30f4dd516d0e6243733807
+  src/rcar_mediapipe_hand:
+    type: git
+    url: https://github.com/renesas-rdk/rcar_mediapipe_hand.git
+    version: f730358b001c4ad98384698759e11703bd8fcee5
+  src/rcar_model:
+    type: git
+    url: https://github.com/renesas-rdk/rcar_model.git
+    version: c47373004c0e5a840bbc8187db7b80f5e3e6b89e
+  src/rcar_pose_estimation:
+    type: git
+    url: https://github.com/renesas-rdk/rcar_pose_estimation.git
+    version: 170d7462d058708e031821582717833d57923825
+  src/rcar_yolox:
+    type: git
+    url: https://github.com/renesas-rdk/rcar_yolox.git
+    version: d961e0b57998de8c7f6c668bec48cfcff7f1e2f5
+  src/renesas_demo_dexhand:
+    type: git
+    url: https://github.com/renesas-rdk/renesas_demo_dexhand.git
+    version: b35a03aa2ece9224868b212d05ff13a60a351440
+  src/renesas_model_utils_ros2:
+    type: git
+    url: https://github.com/renesas-rdk/renesas_model_utils_ros2.git
+    version: ebb58418344ce0c82dd0be947f1a5201889575b2
+  src/ruiyan_rh2_hand:
+    type: git
+    url: https://github.com/renesas-rdk/ruiyan_rh2_hand.git
+    version: fcc1de4c4ae5665519e948463d54f5c51d78f7e8

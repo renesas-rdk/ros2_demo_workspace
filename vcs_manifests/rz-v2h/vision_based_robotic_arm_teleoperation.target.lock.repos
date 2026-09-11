@@ -1,0 +1,61 @@
+repositories:
+  src/agilex_piper_arm:
+    type: git
+    url: https://github.com/renesas-rdk/agilex_piper_arm.git
+    version: d9705de2fcd3ef843a8798fbbadc1c0268d67a80
+  src/arm_hand_control:
+    type: git
+    url: https://github.com/renesas-rdk/arm_hand_control.git
+    version: e7bc3e1bc741b025ae956431b07217f4aeb99ffd
+  src/cartesian_controllers:
+    type: git
+    url: https://github.com/renesas-rdk/cartesian_controllers.git
+    version: bb3bcc4ec15f8c62c98b32e153ca4f064b23de7d
+  src/dexhand_utils:
+    type: git
+    url: https://github.com/renesas-rdk/dexhand_utils.git
+    version: 7d3e4a50b1487d9732f09a2d2655602835abd206
+  src/foxglove_keypoint_publisher:
+    type: git
+    url: https://github.com/renesas-rdk/foxglove_keypoint_publisher.git
+    version: 30b52b8c64f2aeca651e7dbe2cfe91b7416f31a8
+  src/inspire_rh56_hand:
+    type: git
+    url: https://github.com/renesas-rdk/inspire_rh56_hand.git
+    version: 63be2c44440b7717d111e5176a1dff4d02a98dda
+  src/piper_arm_inspire_hand_bringup:
+    type: git
+    url: https://github.com/renesas-rdk/piper_arm_inspire_hand_bringup.git
+    version: 8b6ac30e4fe6efe900146228183791cc8c06a069
+  src/renesas_model_utils_ros2:
+    type: git
+    url: https://github.com/renesas-rdk/renesas_model_utils_ros2.git
+    version: ebb58418344ce0c82dd0be947f1a5201889575b2
+  src/rzv_hrnetv2:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_hrnetv2.git
+    version: 4c8d80c421511193276d1c529a6c8ab574e031ee
+  src/rzv_mediapipe:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_mediapipe.git
+    version: 939274ba9fee0d0b98412d15c7127a71c612dbf0
+  src/rzv_model:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_model.git
+    version: b094772685485620e94fba7316b9bc075518c83c
+  src/rzv_playground:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_playground.git
+    version: 89e10ebd92fc67a2392eaec8c10ef8fea570fb69
+  src/rzv_pose_estimation:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_pose_estimation.git
+    version: 1bea087603f32dfef263aab69f6022d6dc75b945
+  src/rzv_rtmpose:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_rtmpose.git
+    version: 23bc4ec6b975ae13b7066e9993d2d4866f467802
+  src/rzv_yolox:
+    type: git
+    url: https://github.com/renesas-rdk/rzv_yolox.git
+    version: bfd2fc618d43b4cf87be53ba2ea05b730f3166d7
