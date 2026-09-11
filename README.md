@@ -59,6 +59,12 @@ will not build the demo for the other.
 
 ### R-Car V4H (`vcs_manifests/rcar-v4h/`)
 
+- `hand_landmark_estimation.target.lock.repos`
+  Vision inference stack for hand landmark and pose estimation on target, using
+  the R-Car YOLOX + MediaPipe pose stack.
+- `static_object_detection.target.lock.repos`
+  Static object detection stack built around the R-Car model and YOLO detection
+  packages (YOLOv5, YOLOv8, YOLOX).
 - `vision_based_dexterous_hand.target.lock.repos`
   Hand landmark estimation retargeted onto a dexterous hand, using the R-Car
   YOLOX + MediaPipe pose stack. Covers the Inspire RH56, Inspire RH56E2, and
