@@ -7,7 +7,7 @@ set -euo pipefail
 # Settings, replace the values below with the ones of your setup
 BOARD=ubuntu@192.168.1.100                # <user>@<ip> of the board
 BOARD_PW=ubuntu                           # SSH password of the board
-PKG="/data2/congnguyenvan/v4h_workspace"  # Root directory of the unpacked HyCo package
+PKG="/path/to/hyco-install"               # Root directory of the unpacked HyCo package
                                           # (i.e. the directory such that $PKG/installation/install.sh exists)
 XOS_VERSION=v3.43.0                       # Installed xOS SDK version, adjust if different
 
