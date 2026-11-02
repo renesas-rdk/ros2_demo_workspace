@@ -13,9 +13,9 @@ The workspace is intended to make demo setup repeatable by keeping dependency re
 - `common_utils/apt_install_ros2.sh`
   Installs ROS 2 Jazzy on Ubuntu 24.04 ARM64. The script is designed for target-side setup and must be run as `root`.
 - `common_utils/setup_rdk_docker.sh`
-  Creates and prepares a Docker container based on `ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch` for cross-building ROS 2 workspaces on a Linux host (Ubuntu, MacOS).
+  Creates and prepares a Docker container for cross-building ROS 2 workspaces on a Linux host (Ubuntu, MacOS). The first argument selects the image: `rzv2h` (default, `ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch`), `rcarv4h`, or `rcarx5h`.
 - `common_utils/setup_rdk_docker.ps1`
-  Creates and prepares a Docker container based on `ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch` for cross-building ROS 2 workspaces on a Windows host.
+  Creates and prepares a Docker container for cross-building ROS 2 workspaces on a Windows host. The first argument selects the image: `rzv2h` (default, `ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch`), `rcarv4h`, or `rcarx5h`.
 - `vcs_manifests/<platform>/*.lock.repos`
   Pinned import manifests for individual demos and deployment targets.
 

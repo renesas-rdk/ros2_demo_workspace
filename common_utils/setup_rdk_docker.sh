@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# setup_rdk_docker.sh: quick setup script for a Docker environment used to cross-build applications for the Renesas ARM64 platforms (R-Car V4H, RZ/V2H)
+# setup_rdk_docker.sh: quick setup script for a Docker environment used to cross-build applications for the Renesas ARM64 platforms (R-Car V4H, R-Car X5H, RZ/V2H)
 set -euo pipefail
 
 DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch"
@@ -13,6 +13,9 @@ ORIG_ARGS=("$@")
 PLATFORM="${1:-}"
 if [ "$PLATFORM" == "rcarv4h" ]; then
     DEFAULT_IMAGE="ghcr.io/renesas-rdk/rcarv4h_ubuntu_xbuild:multiarch"
+    shift
+elif [ "$PLATFORM" == "rcarx5h" ]; then
+    DEFAULT_IMAGE="ghcr.io/renesas-rdk/rcarx5h_ubuntu_xbuild:multiarch"
     shift
 elif [ "$PLATFORM" == "rzv2h" ]; then
     DEFAULT_IMAGE="ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch"
@@ -38,6 +41,7 @@ Usage: $0 [platform] [options]
 
 Platform: if specified, sets the default image and some config for a particular Renesas platform. If not specified, defaults to RZ/V2H.
   rcarv4h                      Use R-Car V4H image
+  rcarx5h                      Use R-Car X5H image
   rzv2h                        Use RZ/V2H image (default)
 
 Options:
@@ -56,10 +60,12 @@ Options:
 Examples:
   $0
   $0 rcarv4h
+  $0 rcarx5h
   $0 rzv2h
   $0 rcarv4h -n my_container -w ~/ros2_ws
   $0 rzv2h -n my_container -w ~/ros2_ws
   $0 rcarv4h -n my_container -w ~/ros2_ws -y --pull --create
+  $0 rcarx5h -n my_container -w ~/ros2_ws -y --pull --create
   $0 rzv2h -n my_container -w ~/ros2_ws -y --pull --create
   $0 rzv2h --platform linux/arm64 -n my_container -w ~/ros2_ws -y --pull --create
   $0 rcarv4h --platform linux/arm64 -n my_container -w ~/ros2_ws -y --pull --create

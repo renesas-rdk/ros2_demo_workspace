@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 # setup_rdk_docker.ps1: quick setup script for a Docker environment used to
-# cross-build applications for the Renesas ARM64 platforms (R-Car V4H, RZ/V2H).
+# cross-build applications for the Renesas ARM64 platforms (R-Car V4H, R-Car X5H, RZ/V2H).
 #
 # Native Windows port of setup_rdk_docker.sh. Requires Docker Desktop running in
 # *Linux containers* mode (WSL2 or Hyper-V backend). Docker-outside-of-Docker
@@ -27,6 +27,7 @@ $argList = [System.Collections.ArrayList]@($args)
 if ($argList.Count -gt 0) {
     switch ([string]$argList[0]) {
         'rcarv4h' { $DefaultImage = 'ghcr.io/renesas-rdk/rcarv4h_ubuntu_xbuild:multiarch'; $argList.RemoveAt(0) }
+        'rcarx5h' { $DefaultImage = 'ghcr.io/renesas-rdk/rcarx5h_ubuntu_xbuild:multiarch'; $argList.RemoveAt(0) }
         'rzv2h'   { $DefaultImage = 'ghcr.io/renesas-rdk/rzv2h_ubuntu_xbuild:multiarch';   $argList.RemoveAt(0) }
     }
 }
@@ -47,6 +48,7 @@ Usage: $ScriptName [platform] [options]
 
 Platform: if specified, sets the default image and some config for a particular Renesas platform. If not specified, defaults to RZ/V2H.
   rcarv4h                      Use R-Car V4H image
+  rcarx5h                      Use R-Car X5H image
   rzv2h                        Use RZ/V2H image (default)
 
 Options:
@@ -65,6 +67,7 @@ Options:
 Examples:
   .\$ScriptName
   .\$ScriptName rcarv4h
+  .\$ScriptName rcarx5h
   .\$ScriptName rzv2h
   .\$ScriptName rcarv4h -n my_container -w C:\Users\me\ros2_ws
   .\$ScriptName rzv2h -n my_container -w ~/ros2_ws -y --pull --create
